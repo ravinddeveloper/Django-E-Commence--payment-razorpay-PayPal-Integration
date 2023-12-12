@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block start %}
+<br>
+<br>
+<br>
+<br>
+<br>
+{% for msg in messages%}
+<div class="alert alert-primary" role="alert">
+    {{msg}}
+</div>
+{%endfor%}
+<div class="d-flex flex-wrap justify-content-evenly" style="z-index:-1;">
+  {% for d in data %}
+    <div class="card mb-3 mr-5" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+             <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="/static/media/{{d.product_img1}}" class="img-fluid rounded-start" alt="{{d.product_name}}">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="/static/media/{{d.product_img2}}" class="img-fluid rounded-start" alt="{{d.product_name}}">
+                  </div>
+                </div>
+              </div>
+              {% comment %} <img src="/static/media/{{d.product_img2}}" class="img-fluid rounded-start" alt="..."> {% endcomment %}
+            </div>
+            <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{d.product_name}}</h5>
+              <p class="card-text"> {{d.product_desc}}</p>
+              <p class="card-text"> <pre><del>{{d.product_price}}Rs</del>  {{d.product_disc_price}}Rs</pre></p>
+              <p class="card-text"><small class="">
+                {%if d.product_qty >= 10 %}
+                     In stock
+                {% elif d.product_qty == 0 %}
+                    <h3><p class="text-danger">Out of Stock</p></h3>
+                {%else%}
+                     <b><p class="text-danger">{{d.product_qty}} left Hurry Up</p></b>
+               {%endif%}
+              </small></p>
+              {% if d.product_qty != 0 %}
+                  {% if addr == True %}
+                     <a {% if user.is_authenticated %}href="buy_now/{{d.product_id}}"{% else %}href="{% url "login" %}"{% endif %} class="btn btn-primary">Buy Now</a>
+                  {%else%}
+                     <a {% if user.is_authenticated %}href="{% url "add_address" %}"{% else %}href="{% url "login" %}"{% endif %} class="btn btn-primary">Buy Now</a>
+                  {% endif %}
+                  <a {% if user.is_authenticated %}href="add-to-cart/{{d.product_id}}"{% else %}href="{% url "login" %}"{% endif %} class="btn btn-primary">Add to cart</a>
+              {%else%}
+                    <p>Come Back Later</p>
+              {%endif%}
+            </div>
+          </div>
+        </div>
+      </div>
+  {% empty %}
+  <center>
+    <p class="bg-body-tertiary py-5 px-5"><b>PRODUCTS ARE NOT AVAILABLE | PLEASE CONTACT CART GLORY</b></p>
+  </center>
+     
+{%endfor%}
+</div>
+<center><h1 class="mt-5">RECENTLY VIEWED</h1></center>
+ <section class="pt-5 pb-5">
+     <div class="container">
+         <div class="row">
+             <div class="col-6">
+                <!--- <h3 class="mb-3">Recent Views </h3>-->
+             </div>
+             <div class="col-12">
+                 <div id="carouselExampleIndicatorsd2" class="carousel slide" data-ride="carousel">
+                     <div class="carousel-inner">
+
+                         <div class="carousel-item active">
+                             <div class="row">
+                              {% for i in recent %}
+                                 <div class="col-md-4 mb-3" id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+                                     <div class="card">
+                                         <center><img class="" alt="100%x280" src="/static/media/{{i.product_img1}}" height="250px" width="260px"></center>
+                                         <div class="card-body">
+                                             <h4 class="card-title">{{i.product_name  | slice:25}}</h4>
+                                             <p class="card-text">Price : {{i.product_disc_price }}</p>
+                                             {% if i.product_qty != 0 %}
+                                                  {% if addr == True %}
+                                                    <a {% if user.is_authenticated %}href="buy_now/{{i.product_id}}"{% else %}href="{% url "login" %}"{% endif %} class="btn btn-primary">Buy Now</a>
+                                                  {%else%}
+                                                    <a {% if user.is_authenticated %}href="{% url "add_address" %}"{% else %}href="{% url "login" %}"{% endif %} class="btn btn-primary">Buy Now</a>
+                                                  {% endif %}
+                                                  <a {% if user.is_authenticated %}href="add-to-cart/{{i.product_id}}"{% else %}href="{% url "login" %}"{% endif %} class="btn btn-primary">Add to cart</a>
+                                              {%else%}
+                                                    <p>Come Back Later</p>
+                                              {%endif%}
+                                         </div>
+                                     </div>
+                                 </div>
+                                 {% empty %}
+                                    <center>
+                                    <p class="bg-body-tertiary py-5 px-5"><b>NO PRODUCTS ARE VIEWED</b></p>
+                                    </center>
+                              {% endfor%}
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </section>
+
+
+
+
+<center><h1 class="mt-5"> CATEGORY</h1></center>
+{% regroup data by product_cat as p_list %}
+
+<!-----{% for c in p_list %}
+          <h4>{{c.grouper}}</h4>
+            {% for d in c.list %}
+              {{d.product_name}}
+            {% endfor %}
+{% endfor %}------>
+
+
+
+<section class="pt-5 pb-5">
+  <div class="container">
+      <div class="row">
+        {% for c in p_list %}
+          <div class="col-6">
+              <h2 class="mb-3">{{c.grouper|upper}}</h2>
+          </div>
+          <div class="col-12">
+              <div id="carouselExampleIndicatorsd2" class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner">
+
+                      <div class="carousel-item active">
+                          <div class="row">
+                           {% for i in c.list %}
+                              <div class="col-md-4 mb-3" id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+                                  <div class="card">
+                                      <center><img class="" alt="100%x280" src="/static/media/{{i.product_img1}}" height="250px" width="260px"></center>
+                                      <div class="card-body">
+                                          <h4 class="card-title">{{i.product_name  | slice:25}}</h4>
+                                          <p class="card-text">Price : {{i.product_disc_price }}</p>
+                                          {% if i.product_qty != 0 %}
+                                               {% if addr == True %}
+                                                 <a {% if user.is_authenticated %}href="buy_now/{{i.product_id}}"{% else %}href="{% url "login" %}"{% endif %} class="btn btn-primary">Buy Now</a>
+                                               {%else%}
+                                                 <a {% if user.is_authenticated %}href="{% url "add_address" %}"{% else %}href="{% url "login" %}"{% endif %} class="btn btn-primary">Buy Now</a>
+                                               {% endif %}
+                                               <a {% if user.is_authenticated %}href="add-to-cart/{{i.product_id}}"{% else %}href="{% url "login" %}"{% endif %} class="btn btn-primary">Add to cart</a>
+                                           {%else%}
+                                                 <p>Come Back Later</p>
+                                           {%endif%}
+                                      </div>
+                                  </div>
+                              </div>
+                           {% endfor%}
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+      </div>
+  </div>
+</section>
+{% endblock start %}

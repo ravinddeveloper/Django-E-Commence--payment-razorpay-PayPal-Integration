@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block start %}
+<br>
+<br>
+<br>
+<br>
+<br>
+{% for msg in messages%}
+<div class="alert alert-primary" role="alert">
+    {{msg}}
+</div>
+{%endfor%}
+<div class="d-flex flex-wrap justify-content-evenly" style="z-index:-1;">
+  {% for d in data %}
+    <div class="card mb-3 mr-5" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+             <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="/static/media/{{d.product_img1}}" class="img-fluid rounded-start" alt="{{d.product_name}}">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="/static/media/{{d.product_img2}}" class="img-fluid rounded-start" alt="{{d.product_name}}">
+                  </div>
+                </div>
+              </div>
+              {% comment %} <img src="/static/media/{{d.product_img2}}" class="img-fluid rounded-start" alt="..."> {% endcomment %}
+            </div>
+            <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{d.product_name}}</h5>
+              <p class="card-text"> {{d.product_desc}}</p>
+              <p class="card-text"> <pre><del>{{d.product_price}}Rs</del>  {{d.product_disc_price}}Rs</pre></p>
+              <p class="card-text"><small class="">
+                {%if d.product_qty >= 10 %}
+                     In stock
+                {% elif d.product_qty == 0 %}
+                    <h3><p class="text-danger">Out of Stock</p></h3>
+                {%else%}
+                     <b><p class="text-danger">{{d.product_qty}} left Hurry Up</p></b>
+               {%endif%}
+              </small></p>
+              {% if d.product_qty != 0 %}
+                  {% if addr == True %}
+                     <a {% if user.is_authenticated %}href="buy_now/{{d.product_id}}"{% else %}href="{% url "login" %}"{% endif %} class="btn btn-primary">Buy Now</a>
+                  {%else%}
+                     <a {% if user.is_authenticated %}href="{% url "add_address" %}"{% else %}href="{% url "login" %}"{% endif %} class="btn btn-primary">Buy Now</a>
+                  {% endif %}
+                  <a {% if user.is_authenticated %}href="add-to-cart/{{d.product_id}}"{% else %}href="{% url "login" %}"{% endif %} class="btn btn-primary">Add to cart</a>
+              {%else%}
+                    <p>Come Back Later</p>
+              {%endif%}
+            </div>
+          </div>
+        </div>
+      </div>
+   
+     
+{%endfor%}
+</div>
+
+{% endblock start %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block start %}
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+  {% for msg in messages%}
+  <div class="alert alert-primary" role="alert">
+      {{msg}}
+  </div>
+{%endfor%}
+<div class="text-center">
+    <h1>MY ORDERS</h1>
+</div>
+{% for i in orders %}
+<ul class="list-group mt-3">
+    <a href="/" class="dropdown-item">
+    <li class="list-group-item">
+        Order Id :<b>{{i.order_id}}</b><br>
+        Product Name : <b>{{i.cart.product_id.product_name}}</b><br>
+        Product Price : <b>{{i.cart.product_id.product_disc_price}}</b><br>
+        Product Bought Date : <b>{{i.cart.Added_date}}</b><br>
+        product Quantity : <b>{{i.cart.product_qty}}</b><br>
+        Total Amount : <b>{{i.cart.total_amount}}</b><br>
+        Payment Type : <b>{{i.cart.payment_type}}</b><br><br>
+        <a class="btn btn-light" data-bs-toggle="collapse" href="#collapseExample{{i.id}}" role="button" aria-expanded="false" aria-controls="collapseExample">See More</a><br>
+            
+        <div class="collapse" id="collapseExample{{i.id}}"><br>
+            <div class="card card-body">
+              <ul class="list-group mt-3">
+                <li class="list-group-item">
+                <b>Payment Status : </b> {{i.payment_status|upper}}<br>
+                <b>Date Of Payment : </b> {{i.date_of_payment}}<br>
+                <b>Address : </b> {{i.cart.address.first_name}}{{i.cart.address.last_name}}<br>{{i.cart.address.line_1}},{{i.cart.address.line_2}}<br>{{i.cart.address.city}},{{i.cart.address.state}}-{{i.cart.address.pin_code}}<br>
+                <b>Phone Number: </b>{{i.cart.address.phone_number}},{{i.cart.address.Alt_phone_number}}
+                {%for o in d_status%}
+                
+                    {% if i.order_id == o.order_id.order_id%}
+                         <br>
+                        <b>Delivery Status : </b>{{o.status}}
+                            {% if o.refund_status == "none" %}
+                            {%else%}
+                            <br>
+                                <b>Refund Status : </b> {{o.refund_status|upper}}
+                            {%endif%}
+                        
+                    {%endif%}
+                {%endfor%}
+            </li>
+             </ul>
+            </div>
+        </div>
+    </li>
+</a>
+</ul>
+{% empty %}
+    <center>
+     <p class="bg-body-tertiary py-5 px-5"><b>NOTHING YET ORDERED</b></p>
+    </center>
+{% endfor %}
+</div>
+
+{% endblock%}

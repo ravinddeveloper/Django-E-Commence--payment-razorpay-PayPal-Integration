@@ -1,0 +1,49 @@
+
+
+    <footer class="py-5 px-5 mt-5 bg-light" style="user-select: auto;">
+      <div class="row" style="user-select: auto;">
+        <div class="col-2" style="user-select: auto;">
+          <h5 style="user-select: auto;">Section</h5>
+          <ul class="nav flex-column" style="user-select: auto;">
+            <li class="nav-item mb-2" style="user-select: auto;"><a href="{% url "dashboard" %}" class="nav-link p-0 text-muted" style="user-select: auto;">Home</a></li>
+            <li class="nav-item mb-2" style="user-select: auto;"><a href="#" class="nav-link p-0 text-muted" style="user-select: auto;">Features</a></li>
+            <li class="nav-item mb-2" style="user-select: auto;"><a href="#" class="nav-link p-0 text-muted" style="user-select: auto;">Pricing</a></li>
+            <li class="nav-item mb-2" style="user-select: auto;"><a href="#" class="nav-link p-0 text-muted" style="user-select: auto;">FAQs</a></li>
+            <li class="nav-item mb-2" style="user-select: auto;"><a href="#" class="nav-link p-0 text-muted" style="user-select: auto;">About</a></li>
+          </ul>
+        </div>
+
+        <div class="col-2" style="user-select: auto;">
+          <h5 style="user-select: auto;">Section</h5>
+          <ul class="nav flex-column" style="user-select: auto;">
+            <li class="nav-item mb-2" style="user-select: auto;"><a href="#" class="nav-link p-0 text-muted" style="user-select: auto;">Home</a></li>
+            <li class="nav-item mb-2" style="user-select: auto;"><a href="#" class="nav-link p-0 text-muted" style="user-select: auto;">Features</a></li>
+            <li class="nav-item mb-2" style="user-select: auto;"><a href="#" class="nav-link p-0 text-muted" style="user-select: auto;">Pricing</a></li>
+            <li class="nav-item mb-2" style="user-select: auto;"><a href="#" class="nav-link p-0 text-muted" style="user-select: auto;">FAQs</a></li>
+            <li class="nav-item mb-2" style="user-select: auto;"><a href="#" class="nav-link p-0 text-muted" style="user-select: auto;">About</a></li>
+          </ul>
+        </div>
+  
+        <div class="col-4 offset-1" style="user-select: auto;">
+          <form style="user-select: auto;" method='post' action="/newsletter/">
+            {% csrf_token %}
+            <h5 style="user-select: auto;">Subscribe to our newsletter</h5>
+            <p style="user-select: auto;">Monthly digest of whats new and exciting from us.</p>
+            <div class="d-flex w-100 gap-2" style="user-select: auto;">
+              <label for="newsletter1" class="visually-hidden" style="user-select: auto;">Email address</label>
+              <input id="newsletter1" name ="newsletter" type="email" class="form-control" placeholder="Email address" style="user-select: auto;" required>
+              <button class="btn btn-primary" type="submit" style="user-select: auto;">Subscribe</button>
+            </div>
+          </form>
+        </div>
+      </div>
+  
+      <div class="d-flex justify-content-between py-4 my-4 border-top" style="user-select: auto;">
+        <p style="user-select: auto;">© 2023 CART GLORY, Inc. All rights reserved.</p>
+        <ul class="list-unstyled d-flex" style="user-select: auto;">
+          <li class="ms-3" style="user-select: auto;"><a class="link-dark" href="#" style="user-select: auto;"><svg class="bi" width="24" height="24" style="user-select: auto;"><use xlink:href="#twitter" style="user-select: auto;"></use></svg></a></li>
+          <li class="ms-3" style="user-select: auto;"><a class="link-dark" href="#" style="user-select: auto;"><svg class="bi" width="24" height="24" style="user-select: auto;"><use xlink:href="#instagram" style="user-select: auto;"></use></svg></a></li>
+          <li class="ms-3" style="user-select: auto;"><a class="link-dark" href="#" style="user-select: auto;"><svg class="bi" width="24" height="24" style="user-select: auto;"><use xlink:href="#facebook" style="user-select: auto;"></use></svg></a></li>
+        </ul>
+      </div>
+    </footer>

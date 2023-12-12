@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block start %}
+<body class="bg-dark">
+    <br>
+    <br>
+    <br>
+<div class="container border p-5 mt-5 mb-5 rounded bg-white w-50 h-50">
+    <form method="post">
+        {% csrf_token %}
+        {% for msg in messages%}
+        <div class="alert alert-primary" role="alert">
+         {{msg}}
+        </div>
+        {%endfor%}
+        <div class="container ">
+         <div class="text-center"><h1>Register</h1></div>
+         
+        <!-- username input -->
+        <div class="form-outline mb-4">
+          <input type="text" id="form2Example1" name="username" class="form-control" />
+          <label class="form-label" for="form2Example1" >Username</label>
+        </div>
+         <!-- first name input -->
+         <div class="form-outline mb-4">
+            <input type="text" id="form2Example1" name="fname" class="form-control" />
+            <label class="form-label" for="form2Example1" >First Name</label>
+          </div>
+           <!-- last name input -->
+        <div class="form-outline mb-4">
+            <input type="text" id="form2Example1" name="lname" class="form-control" />
+            <label class="form-label" for="form2Example1" >Last Name</label>
+          </div>
+           <!-- Email input -->
+        <div class="form-outline mb-4">
+            <input type="email" id="form2Example1" name="email" class="form-control" />
+            <label class="form-label" for="form2Example1" >Email</label>
+          </div>
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+          <input type="password" id="form2Example2" name="pass1" class="form-control" />
+          <label class="form-label" for="form2Example2">Password</label>
+        </div>
+         <!-- Password input -->
+         <div class="form-outline mb-4">
+            <input type="text" id="form2Example2" name="pass2" class="form-control" />
+            <label class="form-label" for="form2Example2">Confirm Password</label>
+          </div>
+    </div>
+        <!-- 2 column grid layout for inline styling -->
+        <div class="row mb-4 text-center">
+          <div class="container">
+             <button type="submit" class="btn btn-primary btn-block mb-4 ">Sign in</button>
+          </div>
+        </div>
+      
+      
+        <!-- Register buttons -->
+        <div class="text-center">
+          <p>Have an account? <a href="{% url "login" %}">Login</a></p>
+        </div>
+      </form>
+</div>    
+</body>
+
+{% endblock start %}

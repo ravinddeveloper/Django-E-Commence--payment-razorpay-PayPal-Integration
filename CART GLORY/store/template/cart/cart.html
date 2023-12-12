@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block start %}
+<br>
+<br>
+<br>
+<br>
+<br>
+{% for msg in messages%}
+<div class="alert alert-primary" role="alert">
+    {{msg}}
+</div>
+{%endfor%}
+ 
+
+<h1>CART</h1>
+{% if cart_count != 0 %}
+   <a href="/clear-cart" class="btn btn-primary float-end m-2">CLEAR CART</a>
+{% endif %}
+ <br><br><br><br>
+<ol class="list-group list-group-numbered">
+    {% for d in data %}
+      
+        <li class="list-group-item d-flex justify-content-sm-around align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">{{d.product_id.product_name}}</div>
+            Product Price : <del>{{ d.product_id.product_price }}</del> {{d.product_id.product_disc_price}}<br>
+            Quantity : {{d.product_qty }}   <br>
+            Total Amount : {{d.total_amount}}   <br>
+            {%if d.product_id.product_qty >= 10 %}
+                      In stock
+                {% elif d.product_id.product_qty == 0 %}
+                    <h3><p class="text-danger">Out of Stock</p></h3>
+                {%else%}
+                      <b><p class="text-danger">{{d.product_id.product_qty}} left Hurry Up</p></b>
+                {%endif%}
+                
+             </div>
+             <div class="">
+                    <a href="{% url 'minus' d.product_id %}" style="display: inline-block; border: 1px solid black;width: 20px; text-align: center;text-decoration: none;">-</a>
+                    <input type="text" name="" id="" disabled style="display: inline-block; width: 30px;" value="{{d.product_qty }}">
+                    <a href="{% url 'plus' d.product_id %}" style="display: inline-block; border: 1px solid black;width: 20px; text-align: center;text-decoration: none;">+</a>
+            </div>
+                      {%if d.product_id.product_qty >= d.product_qty %}
+                          <a href="/buy/{{d.product_id}}" class="m-3">
+                                <div data-tooltip="Price:{{d.total_amount}}" class="button_buy">
+                                    <div class="button-wrapper-buy">
+                                        <div class="text">Buy Now</div>
+                                        <span class="icon">
+                                            <svg viewBox="0 0 16 16" class="bi bi-cart2" fill="currentColor" height="16" width="16" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"></path>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </div>
+                             </a>
+                      {% elif d.product_id.product_qty == 0 %}
+                          <a href="" class="btn btn-primary disabled">Buy Now</a>
+                      {%endif%}
+                      <a class="btn btn-danger m-3" href="/delete-cart-item/{{d.id}}" <i class="fa fa-trash">Delete</i></a>
+        </li>
+    {% empty %}
+    <center>
+     <p class="bg-body-tertiary py-5 px-5"><b>CART IS EMPTY</b></p>
+    </center>
+    {% endfor %}
+{% comment %} 
+    {% if total.total_amount__sum != None %}
+       {{total.total_amount__sum}}
+    {% endif %} {% endcomment %}
+    
+  </ol>
+
+{% endblock start %}

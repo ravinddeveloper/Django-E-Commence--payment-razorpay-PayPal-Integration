@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block start %}
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+  {% for msg in messages%}
+  <div class="alert alert-primary" role="alert">
+      {{msg}}
+  </div>
+{%endfor%}
+  <blockquote >
+   <legend>Add New Address</legend>
+    <form class="row g-3 needs-validation" validate method="post" action="{% url "add_address" %}" >
+      {% csrf_token %}
+        <div class="col-md-4">
+          <label for="validationCustom01" class="form-label">First name</label>
+          <input type="text" class="form-control" id="validationCustom01" name="fname" placeholder="Ravi" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for="validationCustom02" class="form-label">Last name</label>
+          <input type="text" class="form-control" id="validationCustom02" name="lname" placeholder="kumar" required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for="validationCustom02" class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" id="validationCustom02" name="phone" placeholder="1234567890"required>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for="validationCustom02" class="form-label">Alternative Phone Number</label>
+          <input type="tel" class="form-control" id="validationCustom02" name="alphone" placeholder="1234567890">
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for="validationCustomUsername" class="form-label">Address Line 1</label>
+          <div class="input-group has-validation">
+            <input type="text" class="form-control" id="validationCustomUsername" name="ad1" placeholder="1234 Main St" aria-describedby="inputGroupPrepend" required>
+            <div class="invalid-feedback">
+              Enter Valid Input
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for="validationCustomUsername" class="form-label">Address Line 2</label>
+          <div class="input-group has-validation">
+            <input type="text" class="form-control" id="validationCustomUsername" name="ad2" placeholder="area colony" aria-describedby="inputGroupPrepend" required>
+            <div class="invalid-feedback">
+              Enter Valid Input
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="validationCustom03" class="form-label">City</label>
+          <input type="text" class="form-control" id="validationCustom03" name="city" placeholder="Bengaluru" required>
+          <div class="invalid-feedback">
+            Please provide a valid city.
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="validationCustom04" class="form-label">State</label>
+          <select class="form-select" id="validationCustom04" name="state" required>
+            <option selected disabled value="">Choose...</option>
+            <option value="KARNATAKA">KARNATAKA</option>
+            <option value="GOA">GOA</option>
+            <option value="ANDRA PRADESH">ANDRA PRADESH</option>
+            <option value="KERALA">KERALA</option>
+            <option value="TAMILNADU">TAMILNADU</option>
+            <option value="MAHARATSTRA">MAHARATSTRA</option>
+            <option value="GUJARAT">GUJARAT</option>
+            <option value="DELHI">DELHI</option>
+            <option value="JAMMU & KASMIR">JAMMU & KASMIR</option>
+            <option value="UTTARPRADESH">UTTARPRADESH</option>
+            <option value="JARKAND">JARKAND</option>
+            <option value="KOLKOTA">KOLKOTA</option>
+            <option value="TELANGANA">TELANGANA</option>
+            <option value="ODISHA">ODISHA</option>
+            <option value="CHATTISGHAD">CHATTISGHAD</option>
+            <option value="MADYAPRADESH">MADYAPRADESH</option>
+            <option value="RAJASTAN">RAJASTAN</option>
+            <option value="HARIYANA">HARIYANA</option>
+            <option value="PANJAB">PANJAB</option>
+            <option value="UTTARKHAND">UTTARKHAND</option>
+            <option value="HIMACHAL PRADESH">HIMACHAL PRADESH</option>
+            <option value="LADAK">LADAK</option>
+            <option value="BHIHAR">BHIHAR</option>
+            <option value="WEST BENGAL">WEST BENGAL</option>
+            <option value="SIKKIM">SIKKIM</option>
+            <option value="ASSAM">ASSAM</option>
+            <option value="ARUNACHALPRADESH">ARUNACHALPRADESH</option>
+          </select>
+          <div class="invalid-feedback">
+            Please select a valid state.
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="validationCustom05" class="form-label">Zip</label>
+          <input type="text" class="form-control" id="validationCustom05" name="zip" required>
+          <div class="invalid-feedback">
+            Please provide a valid zip.
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+            <label class="form-check-label" for="invalidCheck">
+              Agree to terms and conditions
+            </label>
+            <div class="invalid-feedback">
+              You must agree before submitting.
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <button class="btn btn-primary" type="submit">ADD</button>
+        </div>
+      </form> 
+</blockquote>
+   
+</div>
+
+
+<hr>
+
+<legend>Added Address</legend>
+    <ol class="list-group ">
+        {% for i in adr %}
+          <li class="list-group-item">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input " disabled type="radio" name="radio" id="inlineRadio1"  {% if i.is_default == True %}checked {%endif%}>
+              <label class="" for="inlineRadio1">
+                <pre><h5 class="card-title">{{i.first_name}} {{i.last_name}}</h5></pre>
+                <p class="card-text" style="text-transform: lowercase;">{{i.line_1}},{{i.line_2}}</p>
+                <label>Pincode : </label>{{i.pin_code}} <label></label>
+                <label>City : </label>{{i.city}} <label>State : </label>{{i.state}}<br>
+                <label>Phone : </label>{{i.phone_number}},{{i.Alt_phone_number}}<br>
+              </label>
+            </div>
+            <a  href="{% url "hide_address" i.add_id %}" class="btn btn-outline-primary float-end m-2">Delete</a>
+            {% if i.is_default == False %}
+              <a  href="{% url "set_default" i.add_id %}" class="btn btn-outline-primary m-2  float-end">Set Default</a>
+            {%endif%}
+          </li>
+        {%empty%}
+           {% for r in restore %}
+           <li>
+            <b>Name : </b>{{r.first_name}} {{r.last_name}},<b>address :</b> {{r.line_1}},{{r.line_2}} 
+            <a  href="{% url "restore" r.add_id %}" class="btn btn-outline-primary m-2  float-end">Restore</a>
+          </li>
+          {% empty %}
+              <center>
+              <p class="bg-body-tertiary py-5 px-5"><b>NO ADDRESSES ARE ADDED | ADD NEW ONE</b></p>
+              </center>
+           {% endfor %}
+        {% endfor%}
+    
+    </ol>
+
+{% endblock start %} 
